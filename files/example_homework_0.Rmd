@@ -45,8 +45,7 @@ Uncover the factors that lead to employee attrition and explore important questi
 
 
 
-5. [Watch your language - update: feature engineering
-Using data from Text Normalization Challenge - English Language](https://www.kaggle.com/headsortails/watch-your-language-update-feature-engineering)
+5. [Watch your language - update: feature engineering Using data from Text Normalization Challenge - English Language](https://www.kaggle.com/headsortails/watch-your-language-update-feature-engineering)
 
 Extensive Exploratory Data Analysis for the Google Text Normalization Challenge - English Language competition with tidy R, ggplot2, and tidytext.
 
