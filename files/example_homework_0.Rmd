@@ -8,8 +8,8 @@ opts_chunk$set(tidy.opts=list(width.cutoff=60),tidy=TRUE)
 ```
 
 ```{r,echo=FALSE,eval=FALSE}
-rmarkdown::render("C:/Users/Ceren/Documents/GitHub/spring20-cerendemirkol/files/example_homework_0.Rmd",output_format="pdf_document")
-rmarkdown::render("C:/Users/Ceren/Documents/GitHub/spring20-cerendemirkol/files/example_homework_0.Rmd",output_format="html_document")
+rmarkdown::render("/Home/Github/Spring20-cerendemirkol/files/example_homework_0.Rmd",output_format="pdf_document")
+rmarkdown::render("/Home/Github/Spring20-cerendemirkol/files/example_homework_0.Rmd",output_format="html_document")
 ```
 
 1. [Exploring Survival on the Titanic](https://www.kaggle.com/mrisdal/exploring-survival-on-the-titanic)
