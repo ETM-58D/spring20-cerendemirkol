@@ -12,10 +12,10 @@ You can find the answers of the homework 1 which we prepared as a group with [Ok
 ## Homework 2-3
 You can find the answers of the homework 2-3 which we prepared as a group with [Okan Güven](https://etm-58d.github.io/spring20-guven80/) and [Sevgican Varol](https://etm-58d.github.io/spring20-sevgicanvrl).
 
-* [Part A](files/HW23/HW_2-3_Part_a.html) and code files from [here](files/HW23/Codes/HW_2-3_Part_a.ipnyb)
-* [Part B](files/HW23/HW_2-3_Part_b.html) and code files from [here](files/HW23/Codes/HW_2-3_Part_b.ipnyb)
-* [Part C](files/HW23/HW_2-3_Part_c.html) and code files from [here](files/HW23/Codes/HW_2-3_Part_c.ipnyb)
-* [Part D](files/HW23/HW_2-3_Part_d.html) and code files from [here](files/HW23/Codes/HW_2-3_Part_d.ipnyb)
+* [Part A](files/HW23/HW_2-3_Part_a.html)
+* [Part B](files/HW23/HW_2-3_Part_b.html)
+* [Part C](files/HW23/HW_2-3_Part_c.html)
+* [Part D](files/HW23/HW_2-3_Part_d.html)
 
 
 
