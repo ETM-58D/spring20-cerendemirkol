@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>HW_2-3_Part_a</title>
+<title>HW_2-3_Part_d</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13077,17 +13077,18 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Homework-2-3-Part-(a)">Homework 2-3 Part (a)<a class="anchor-link" href="#Homework-2-3-Part-(a)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
+<h1 id="Homework-2-3-Part-(d)">Homework 2-3 Part (d)<a class="anchor-link" href="#Homework-2-3-Part-(d)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">require</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
 <span class="nf">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span>
 </pre></div>
 
@@ -13098,12 +13099,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Getting data</span>
+<span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
 
-<span class="c1">#Format manipulation</span>
 <span class="nf">setnames</span><span class="p">(</span><span class="n">consumption</span><span class="p">,</span><span class="nf">names</span><span class="p">(</span><span class="n">consumption</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">date</span><span class="o">:=</span><span class="nf">as.Date</span><span class="p">(</span><span class="n">Tarih</span><span class="p">,</span><span class="s">&#39;%d.%m.%Y&#39;</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">hour</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">Saat</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))]</span>
@@ -13111,62 +13112,11 @@ div#notebook {
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))]</span>
 
-<span class="nf">head</span><span class="p">(</span><span class="n">consumption</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th></tr></thead>
-<tbody>
-	<tr><td>2016-01-01</td><td>0         </td><td>26277.24  </td></tr>
-	<tr><td>2016-01-01</td><td>1         </td><td>24991.82  </td></tr>
-	<tr><td>2016-01-01</td><td>2         </td><td>23532.61  </td></tr>
-	<tr><td>2016-01-01</td><td>3         </td><td>22464.78  </td></tr>
-	<tr><td>2016-01-01</td><td>4         </td><td>22002.91  </td></tr>
-	<tr><td>2016-01-01</td><td>5         </td><td>21957.08  </td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Data has shifted to create 1 wee kand 2 days of lag. Then NA rows removed</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
+<span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">lag_48</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">48</span><span class="p">)]</span>
 
-<span class="n">full_data</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<span class="n">full_consumption</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">full_consumption</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13204,22 +13154,78 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Absolute percentage error valuesa re calculated.</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Filter consumption data in long format</span>
+<span class="n">long_tr</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&lt;</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
+<span class="n">long_te</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
 
+<span class="c1"># Create training and test consumption data in wide format with lag_168</span>
+<span class="n">wide_pen_tr</span> <span class="o">=</span> <span class="nf">merge</span><span class="p">(</span><span class="nf">dcast</span><span class="p">(</span><span class="n">long_tr</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_48_hour_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_48&#39;</span><span class="p">),</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_tr</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_168_hour_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_168&#39;</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s">&#39;date&#39;</span><span class="p">)</span>
+<span class="n">wide_pen_tr_ac</span> <span class="o">=</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_tr</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;actual_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
+<span class="n">wide_pen_te</span> <span class="o">=</span> <span class="nf">merge</span><span class="p">(</span><span class="nf">dcast</span><span class="p">(</span><span class="n">long_te</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_48_hour_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_48&#39;</span><span class="p">),</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_te</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_168_hour_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_168&#39;</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s">&#39;date&#39;</span><span class="p">)</span>
+<span class="n">wide_pen_te_ac</span> <span class="o">=</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_te</span><span class="p">,</span> <span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;actual_&#39;</span><span class="p">,</span> <span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
+
+<span class="c1"># Convert data frame to matrix</span>
+<span class="n">wide_tr_mat</span> <span class="o">=</span> <span class="nf">data.matrix</span><span class="p">(</span><span class="n">wide_pen_tr</span><span class="p">)</span>
+<span class="n">wide_tr_ac_mat</span> <span class="o">=</span> <span class="nf">data.matrix</span><span class="p">(</span><span class="n">wide_pen_tr_ac</span><span class="p">)</span>
+<span class="n">wide_te_mat</span> <span class="o">=</span> <span class="nf">data.matrix</span><span class="p">(</span><span class="n">wide_pen_te</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">full_data</span><span class="p">[,</span><span class="n">ape_168</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_168</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span> <span class="c1">#absolute percentage error</span>
-<span class="n">full_data</span><span class="p">[,</span><span class="n">ape_48</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_48</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
-<span class="nf">tail</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Find optimal lambda with cv</span>
+<span class="n">wide_fit_0</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">2</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_1</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">3</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_2</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">14</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_3</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">19</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_4</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">20</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_5</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">21</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_6</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">22</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_7</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">23</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_8</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">24</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_9</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">25</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_10</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">4</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_11</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">5</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_12</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">6</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_13</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">7</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_14</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">8</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_15</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">9</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_16</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">10</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_17</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">11</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_18</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">12</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_19</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">13</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_20</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">15</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_21</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">16</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_22</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">17</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">wide_fit_23</span> <span class="o">=</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span> <span class="m">18</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Sample lamda plot for Hour 0</span>
+<span class="nf">plot</span><span class="p">(</span><span class="n">wide_fit_0</span><span class="p">)</span>
+<span class="n">wide_fit_0</span><span class="o">$</span><span class="n">lambda.min</span>
+<span class="n">wide_fit_0</span><span class="o">$</span><span class="n">lambda.1se</span>
 </pre></div>
 
     </div>
@@ -13237,15 +13243,599 @@ div#notebook {
 
 
 <div class="output_html rendered_html output_subarea ">
+0.514518558833282
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+6.96168189320447
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+nXLiZAAAAABJRU5ErkJggg=="
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Fit lasso models</span>
+<span class="n">lasso_model_0</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">2</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_0</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_1</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">3</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_1</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_2</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">14</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_2</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_3</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">19</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_3</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_4</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">20</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_4</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_5</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">21</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_5</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_6</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">22</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_6</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_7</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">23</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_7</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_8</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">24</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_8</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_9</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">25</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_9</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_10</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">4</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_10</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_11</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">5</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_11</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_12</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">6</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_12</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_13</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">7</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_13</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_14</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">8</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_14</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_15</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">9</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_15</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_16</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">10</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_16</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_17</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">11</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_17</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_18</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">12</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_18</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_19</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">13</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_19</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_20</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">15</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_20</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_21</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">16</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_21</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_22</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">17</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_22</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+<span class="n">lasso_model_23</span> <span class="o">=</span> <span class="nf">glmnet</span><span class="p">(</span><span class="n">wide_tr_mat</span><span class="p">,</span> <span class="n">wide_tr_ac_mat</span><span class="p">[,</span><span class="m">18</span><span class="p">],</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">lambda</span> <span class="o">=</span> <span class="n">wide_fit_23</span><span class="o">$</span><span class="n">lambda.1se</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Make predictions with lasso models and create wide format table with lasso predicted consumption</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">wide_pen_te_ac</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_0</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_0</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_1</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_1</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_2</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_2</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_3</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_3</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_4</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_4</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_5</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_5</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_6</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_6</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_7</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_7</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_8</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_8</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_9</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_9</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_10</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_10</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_11</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_11</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_12</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_12</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_13</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_13</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_14</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_14</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_15</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_15</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_16</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_16</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_17</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_17</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_18</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_18</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_19</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_19</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_20</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_20</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_21</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_21</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_22</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_22</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">lasso_predicted_23</span> <span class="o">:=</span> <span class="nf">predict.glmnet</span><span class="p">(</span><span class="n">lasso_model_23</span><span class="p">,</span> <span class="n">wide_te_mat</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># calculate APE for lasso predicted consumption</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L0</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_0</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_0</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_0</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L1</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_1</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_1</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_1</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L2</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_2</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_2</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_2</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L3</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_3</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_3</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_3</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L4</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_4</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_4</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_4</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L5</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_5</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_5</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_5</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L6</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_6</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_6</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_6</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L7</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_7</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_7</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_7</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L8</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_8</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_8</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_8</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L9</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_9</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_9</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_9</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L10</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_10</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_10</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_10</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L11</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_11</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_11</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_11</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L12</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_12</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_12</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_12</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L13</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_13</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_13</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_13</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L14</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_14</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_14</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_14</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L15</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_15</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_15</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_15</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L16</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_16</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_16</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_16</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L17</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_17</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_17</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_17</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L18</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_18</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_18</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_18</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L19</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_19</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_19</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_19</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L20</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_20</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_20</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_20</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L21</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_21</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_21</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_21</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L22</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_22</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_22</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_22</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">lasso_predicted</span> <span class="o">=</span> <span class="n">lasso_predicted</span><span class="p">[,</span> <span class="n">APE_L23</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_23</span><span class="o">-</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">lasso_predicted_23</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">actual_23</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># calculate MAPE for lasso predicted consumption</span>
+<span class="n">lasso_MAPE_0</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L0</span><span class="p">)</span>
+<span class="n">lasso_MAPE_1</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L1</span><span class="p">)</span>
+<span class="n">lasso_MAPE_2</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L2</span><span class="p">)</span>
+<span class="n">lasso_MAPE_3</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L3</span><span class="p">)</span>
+<span class="n">lasso_MAPE_4</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L4</span><span class="p">)</span>
+<span class="n">lasso_MAPE_5</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L5</span><span class="p">)</span>
+<span class="n">lasso_MAPE_6</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L6</span><span class="p">)</span>
+<span class="n">lasso_MAPE_7</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L7</span><span class="p">)</span>
+<span class="n">lasso_MAPE_8</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L8</span><span class="p">)</span>
+<span class="n">lasso_MAPE_9</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L9</span><span class="p">)</span>
+<span class="n">lasso_MAPE_10</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L10</span><span class="p">)</span>
+<span class="n">lasso_MAPE_11</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L11</span><span class="p">)</span>
+<span class="n">lasso_MAPE_12</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L12</span><span class="p">)</span>
+<span class="n">lasso_MAPE_13</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L13</span><span class="p">)</span>
+<span class="n">lasso_MAPE_14</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L14</span><span class="p">)</span>
+<span class="n">lasso_MAPE_15</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L15</span><span class="p">)</span>
+<span class="n">lasso_MAPE_16</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L16</span><span class="p">)</span>
+<span class="n">lasso_MAPE_17</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L17</span><span class="p">)</span>
+<span class="n">lasso_MAPE_18</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L18</span><span class="p">)</span>
+<span class="n">lasso_MAPE_19</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L19</span><span class="p">)</span>
+<span class="n">lasso_MAPE_20</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L20</span><span class="p">)</span>
+<span class="n">lasso_MAPE_21</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L21</span><span class="p">)</span>
+<span class="n">lasso_MAPE_22</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L22</span><span class="p">)</span>
+<span class="n">lasso_MAPE_23</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L23</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="p">[,</span><span class="m">50</span><span class="o">:</span><span class="m">73</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>     APE_L0            APE_L1            APE_L2              APE_L3        
+ Min.   :0.04351   Min.   :0.07943   Min.   : 0.004535   Min.   : 0.05888  
+ 1st Qu.:0.66156   1st Qu.:0.68368   1st Qu.: 0.896721   1st Qu.: 1.22786  
+ Median :2.15869   Median :2.26281   Median : 2.381548   Median : 2.47044  
+ Mean   :2.53259   Mean   :2.74669   Mean   : 3.087271   Mean   : 3.35774  
+ 3rd Qu.:3.70446   3rd Qu.:4.13637   3rd Qu.: 4.925308   3rd Qu.: 5.02178  
+ Max.   :7.78928   Max.   :9.53377   Max.   :10.217785   Max.   :10.63005  
+     APE_L4             APE_L5            APE_L6             APE_L7        
+ Min.   : 0.04576   Min.   : 0.0522   Min.   : 0.06242   Min.   : 0.06844  
+ 1st Qu.: 0.95051   1st Qu.: 0.9867   1st Qu.: 1.76322   1st Qu.: 1.48796  
+ Median : 2.56450   Median : 2.5155   Median : 3.29442   Median : 4.82729  
+ Mean   : 3.25705   Mean   : 3.3982   Mean   : 4.65824   Mean   : 6.18536  
+ 3rd Qu.: 5.12947   3rd Qu.: 5.2169   3rd Qu.: 7.76812   3rd Qu.:10.87227  
+ Max.   :11.73215   Max.   :12.0246   Max.   :14.21761   Max.   :18.60589  
+     APE_L8             APE_L9            APE_L10          APE_L11      
+ Min.   : 0.01789   Min.   : 0.03132   Min.   : 0.149   Min.   : 0.289  
+ 1st Qu.: 2.68779   1st Qu.: 3.59797   1st Qu.: 2.914   1st Qu.: 3.111  
+ Median : 5.98026   Median : 6.74906   Median : 6.080   Median : 6.489  
+ Mean   : 9.08804   Mean   :10.00040   Mean   :10.101   Mean   : 9.725  
+ 3rd Qu.:13.44778   3rd Qu.:14.01982   3rd Qu.:14.514   3rd Qu.:13.362  
+ Max.   :33.41667   Max.   :39.42435   Max.   :40.181   Max.   :38.199  
+    APE_L12           APE_L13            APE_L14            APE_L15        
+ Min.   : 0.3617   Min.   : 0.02361   Min.   : 0.09445   Min.   : 0.00408  
+ 1st Qu.: 3.2562   1st Qu.: 3.37500   1st Qu.: 3.06675   1st Qu.: 2.56039  
+ Median : 6.3232   Median : 6.54384   Median : 6.39587   Median : 6.19385  
+ Mean   : 9.2429   Mean   : 9.39382   Mean   : 9.36181   Mean   : 8.90382  
+ 3rd Qu.:13.4339   3rd Qu.:13.62484   3rd Qu.:13.34546   3rd Qu.:12.96809  
+ Max.   :34.1240   Max.   :33.45057   Max.   :34.15187   Max.   :32.47139  
+    APE_L16             APE_L17           APE_L18            APE_L19         
+ Min.   : 0.003869   Min.   : 0.0487   Min.   : 0.03594   Min.   : 0.000761  
+ 1st Qu.: 2.548446   1st Qu.: 2.3391   1st Qu.: 2.41581   1st Qu.: 1.892871  
+ Median : 6.294483   Median : 5.5324   Median : 5.27464   Median : 4.068617  
+ Mean   : 8.260915   Mean   : 7.0987   Mean   : 6.02007   Mean   : 4.855632  
+ 3rd Qu.:12.013610   3rd Qu.:10.5432   3rd Qu.: 9.26977   3rd Qu.: 7.688169  
+ Max.   :29.166243   Max.   :24.5814   Max.   :20.52912   Max.   :16.730898  
+    APE_L20            APE_L21            APE_L22           APE_L23      
+ Min.   : 0.03677   Min.   : 0.01445   Min.   : 0.3139   Min.   : 0.121  
+ 1st Qu.: 1.56553   1st Qu.: 1.47422   1st Qu.: 1.4014   1st Qu.: 1.678  
+ Median : 3.84502   Median : 4.03306   Median : 3.6880   Median : 3.220  
+ Mean   : 4.36401   Mean   : 4.70142   Mean   : 4.3496   Mean   : 3.984  
+ 3rd Qu.: 6.54964   3rd Qu.: 6.72894   3rd Qu.: 6.4777   3rd Qu.: 5.851  
+ Max.   :14.47758   Max.   :15.80122   Max.   :15.5381   Max.   :14.145  </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Display summary statistics</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="p">[,</span><span class="m">50</span><span class="o">:</span><span class="m">73</span><span class="p">])</span> <span class="c1"># for APE values</span>
+
+<span class="n">quantile_hour0</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L0</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour1</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L1</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour2</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L2</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour3</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L3</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour4</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L4</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour5</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L5</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour6</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L6</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour7</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L7</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour8</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L8</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour9</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L9</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour10</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L10</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour11</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L11</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour12</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L12</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour13</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L13</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour14</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L14</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour15</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L15</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour16</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L16</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour17</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L17</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour18</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L18</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour19</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L19</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour20</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L20</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour21</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L21</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour22</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L22</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour23</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="o">$</span><span class="n">APE_L23</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+
+<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_hour0</span><span class="p">,</span>
+            <span class="n">quantile_hour1</span><span class="p">,</span>
+            <span class="n">quantile_hour2</span><span class="p">,</span>
+            <span class="n">quantile_hour3</span><span class="p">,</span>
+            <span class="n">quantile_hour4</span><span class="p">,</span>
+            <span class="n">quantile_hour5</span><span class="p">,</span>
+            <span class="n">quantile_hour6</span><span class="p">,</span>
+            <span class="n">quantile_hour7</span><span class="p">,</span>
+            <span class="n">quantile_hour8</span><span class="p">,</span>
+            <span class="n">quantile_hour9</span><span class="p">,</span>
+            <span class="n">quantile_hour10</span><span class="p">,</span>
+            <span class="n">quantile_hour11</span><span class="p">,</span>
+            <span class="n">quantile_hour12</span><span class="p">,</span>
+            <span class="n">quantile_hour13</span><span class="p">,</span>
+            <span class="n">quantile_hour14</span><span class="p">,</span>
+            <span class="n">quantile_hour15</span><span class="p">,</span>
+            <span class="n">quantile_hour16</span><span class="p">,</span>
+            <span class="n">quantile_hour17</span><span class="p">,</span>
+            <span class="n">quantile_hour18</span><span class="p">,</span>
+            <span class="n">quantile_hour19</span><span class="p">,</span>
+            <span class="n">quantile_hour20</span><span class="p">,</span>
+            <span class="n">quantile_hour21</span><span class="p">,</span>
+            <span class="n">quantile_hour22</span><span class="p">,</span>
+            <span class="n">quantile_hour23</span><span class="p">)</span>
+
+<span class="n">q_all</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>     APE_L0            APE_L1            APE_L2              APE_L3        
+ Min.   :0.04351   Min.   :0.07943   Min.   : 0.004535   Min.   : 0.05888  
+ 1st Qu.:0.66156   1st Qu.:0.68368   1st Qu.: 0.896721   1st Qu.: 1.22786  
+ Median :2.15869   Median :2.26281   Median : 2.381548   Median : 2.47044  
+ Mean   :2.53259   Mean   :2.74669   Mean   : 3.087271   Mean   : 3.35774  
+ 3rd Qu.:3.70446   3rd Qu.:4.13637   3rd Qu.: 4.925308   3rd Qu.: 5.02178  
+ Max.   :7.78928   Max.   :9.53377   Max.   :10.217785   Max.   :10.63005  
+     APE_L4             APE_L5            APE_L6             APE_L7        
+ Min.   : 0.04576   Min.   : 0.0522   Min.   : 0.06242   Min.   : 0.06844  
+ 1st Qu.: 0.95051   1st Qu.: 0.9867   1st Qu.: 1.76322   1st Qu.: 1.48796  
+ Median : 2.56450   Median : 2.5155   Median : 3.29442   Median : 4.82729  
+ Mean   : 3.25705   Mean   : 3.3982   Mean   : 4.65824   Mean   : 6.18536  
+ 3rd Qu.: 5.12947   3rd Qu.: 5.2169   3rd Qu.: 7.76812   3rd Qu.:10.87227  
+ Max.   :11.73215   Max.   :12.0246   Max.   :14.21761   Max.   :18.60589  
+     APE_L8             APE_L9            APE_L10          APE_L11      
+ Min.   : 0.01789   Min.   : 0.03132   Min.   : 0.149   Min.   : 0.289  
+ 1st Qu.: 2.68779   1st Qu.: 3.59797   1st Qu.: 2.914   1st Qu.: 3.111  
+ Median : 5.98026   Median : 6.74906   Median : 6.080   Median : 6.489  
+ Mean   : 9.08804   Mean   :10.00040   Mean   :10.101   Mean   : 9.725  
+ 3rd Qu.:13.44778   3rd Qu.:14.01982   3rd Qu.:14.514   3rd Qu.:13.362  
+ Max.   :33.41667   Max.   :39.42435   Max.   :40.181   Max.   :38.199  
+    APE_L12           APE_L13            APE_L14            APE_L15        
+ Min.   : 0.3617   Min.   : 0.02361   Min.   : 0.09445   Min.   : 0.00408  
+ 1st Qu.: 3.2562   1st Qu.: 3.37500   1st Qu.: 3.06675   1st Qu.: 2.56039  
+ Median : 6.3232   Median : 6.54384   Median : 6.39587   Median : 6.19385  
+ Mean   : 9.2429   Mean   : 9.39382   Mean   : 9.36181   Mean   : 8.90382  
+ 3rd Qu.:13.4339   3rd Qu.:13.62484   3rd Qu.:13.34546   3rd Qu.:12.96809  
+ Max.   :34.1240   Max.   :33.45057   Max.   :34.15187   Max.   :32.47139  
+    APE_L16             APE_L17           APE_L18            APE_L19         
+ Min.   : 0.003869   Min.   : 0.0487   Min.   : 0.03594   Min.   : 0.000761  
+ 1st Qu.: 2.548446   1st Qu.: 2.3391   1st Qu.: 2.41581   1st Qu.: 1.892871  
+ Median : 6.294483   Median : 5.5324   Median : 5.27464   Median : 4.068617  
+ Mean   : 8.260915   Mean   : 7.0987   Mean   : 6.02007   Mean   : 4.855632  
+ 3rd Qu.:12.013610   3rd Qu.:10.5432   3rd Qu.: 9.26977   3rd Qu.: 7.688169  
+ Max.   :29.166243   Max.   :24.5814   Max.   :20.52912   Max.   :16.730898  
+    APE_L20            APE_L21            APE_L22           APE_L23      
+ Min.   : 0.03677   Min.   : 0.01445   Min.   : 0.3139   Min.   : 0.121  
+ 1st Qu.: 1.56553   1st Qu.: 1.47422   1st Qu.: 1.4014   1st Qu.: 1.678  
+ Median : 3.84502   Median : 4.03306   Median : 3.6880   Median : 3.220  
+ Mean   : 4.36401   Mean   : 4.70142   Mean   : 4.3496   Mean   : 3.984  
+ 3rd Qu.: 6.54964   3rd Qu.: 6.72894   3rd Qu.: 6.4777   3rd Qu.: 5.851  
+ Max.   :14.47758   Max.   :15.80122   Max.   :15.5381   Max.   :14.145  </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th><th scope=col>lag_168</th><th scope=col>lag_48</th><th scope=col>ape_168</th><th scope=col>ape_48</th></tr></thead>
+<thead><tr><th></th><th scope=col>quantile_hour0</th><th scope=col>quantile_hour1</th><th scope=col>quantile_hour2</th><th scope=col>quantile_hour3</th><th scope=col>quantile_hour4</th><th scope=col>quantile_hour5</th><th scope=col>quantile_hour6</th><th scope=col>quantile_hour7</th><th scope=col>quantile_hour8</th><th scope=col>quantile_hour9</th><th scope=col>...</th><th scope=col>quantile_hour14</th><th scope=col>quantile_hour15</th><th scope=col>quantile_hour16</th><th scope=col>quantile_hour17</th><th scope=col>quantile_hour18</th><th scope=col>quantile_hour19</th><th scope=col>quantile_hour20</th><th scope=col>quantile_hour21</th><th scope=col>quantile_hour22</th><th scope=col>quantile_hour23</th></tr></thead>
 <tbody>
-	<tr><td>2020-05-19</td><td>18        </td><td>30433.07  </td><td>31661.53  </td><td>30360.19  </td><td>4.036596  </td><td>0.2394763 </td></tr>
-	<tr><td>2020-05-19</td><td>19        </td><td>31670.85  </td><td>32431.97  </td><td>31802.96  </td><td>2.403219  </td><td>0.4171344 </td></tr>
-	<tr><td>2020-05-19</td><td>20        </td><td>31370.75  </td><td>31893.32  </td><td>31481.96  </td><td>1.665787  </td><td>0.3545022 </td></tr>
-	<tr><td>2020-05-19</td><td>21        </td><td>31577.82  </td><td>32262.92  </td><td>31349.23  </td><td>2.169561  </td><td>0.7238942 </td></tr>
-	<tr><td>2020-05-19</td><td>22        </td><td>31040.66  </td><td>31651.02  </td><td>30657.57  </td><td>1.966324  </td><td>1.2341555 </td></tr>
-	<tr><td>2020-05-19</td><td>23        </td><td>30283.87  </td><td>30641.29  </td><td>29582.26  </td><td>1.180232  </td><td>2.3167779 </td></tr>
+	<tr><th scope=row>10%</th><td>0.2719644 </td><td>0.3879107 </td><td>0.3768689 </td><td>0.7053363 </td><td>0.4382816 </td><td>0.4914641 </td><td> 0.5412666</td><td> 0.4348535</td><td> 0.6691391</td><td> 1.048124 </td><td>...       </td><td> 1.454870 </td><td> 1.455814 </td><td> 1.168023 </td><td> 0.9576558</td><td> 0.4116781</td><td>0.4749519 </td><td>0.6254576 </td><td>0.9333692 </td><td>0.7863608 </td><td>0.7199767 </td></tr>
+	<tr><th scope=row>25%</th><td>0.6615615 </td><td>0.6836807 </td><td>0.8967210 </td><td>1.2278636 </td><td>0.9505063 </td><td>0.9867080 </td><td> 1.7632200</td><td> 1.4879593</td><td> 2.6877950</td><td> 3.597972 </td><td>...       </td><td> 3.066753 </td><td> 2.560388 </td><td> 2.548446 </td><td> 2.3391369</td><td> 2.4158143</td><td>1.8928709 </td><td>1.5655268 </td><td>1.4742220 </td><td>1.4013785 </td><td>1.6781458 </td></tr>
+	<tr><th scope=row>50%</th><td>2.1586889 </td><td>2.2628084 </td><td>2.3815481 </td><td>2.4704375 </td><td>2.5644957 </td><td>2.5155482 </td><td> 3.2944220</td><td> 4.8272909</td><td> 5.9802561</td><td> 6.749055 </td><td>...       </td><td> 6.395872 </td><td> 6.193847 </td><td> 6.294483 </td><td> 5.5324301</td><td> 5.2746424</td><td>4.0686172 </td><td>3.8450155 </td><td>4.0330558 </td><td>3.6880487 </td><td>3.2204831 </td></tr>
+	<tr><th scope=row>75%</th><td>3.7044601 </td><td>4.1363668 </td><td>4.9253075 </td><td>5.0217833 </td><td>5.1294728 </td><td>5.2169164 </td><td> 7.7681243</td><td>10.8722651</td><td>13.4477816</td><td>14.019816 </td><td>...       </td><td>13.345462 </td><td>12.968087 </td><td>12.013610 </td><td>10.5431644</td><td> 9.2697695</td><td>7.6881686 </td><td>6.5496372 </td><td>6.7289437 </td><td>6.4777159 </td><td>5.8512902 </td></tr>
+	<tr><th scope=row>90%</th><td>5.5148404 </td><td>5.7535225 </td><td>7.0850385 </td><td>7.5047223 </td><td>7.0022576 </td><td>7.0402042 </td><td>10.1658710</td><td>13.2453775</td><td>20.7789020</td><td>23.034984 </td><td>...       </td><td>19.763515 </td><td>19.523728 </td><td>16.708327 </td><td>14.9667503</td><td>12.4095426</td><td>9.1984708 </td><td>8.3728595 </td><td>9.3490989 </td><td>8.3148179 </td><td>8.1671993 </td></tr>
 </tbody>
 </table>
 
@@ -13259,13 +13849,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="n">full_data</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
-
-<span class="nf">boxplot</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lag 168&quot;</span><span class="p">,</span><span class="s">&quot;Lag 48&quot;</span><span class="p">))</span>
-<span class="nf">title</span><span class="p">(</span><span class="s">&quot;Absolute Percentage Error&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Plot a boxplot for penalized APE</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">lasso_predicted</span><span class="p">[,</span><span class="m">50</span><span class="o">:</span><span class="m">73</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13286,218 +13874,176 @@ div#notebook {
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,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
-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
-IIMYkwAAAABJRU5ErkJggg=="
+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
+8B+ikqKz30XJdgAAAABJRU5ErkJggg=="
 >
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">full_data</span><span class="p">[,</span><span class="m">6</span><span class="o">:</span><span class="m">7</span><span class="p">])</span>
-
-<span class="n">quantile_lag_168</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">quantile_lag_48</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_lag_168</span><span class="p">,</span><span class="n">quantile_lag_48</span><span class="p">)</span>
-<span class="n">q_all</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>    ape_168             ape_48        
- Min.   : 0.00006   Min.   : 0.00018  
- 1st Qu.: 1.17450   1st Qu.: 1.70450  
- Median : 2.70960   Median : 5.36646  
- Mean   : 4.93208   Mean   : 7.97246  
- 3rd Qu.: 5.29220   3rd Qu.:10.56880  
- Max.   :87.97862   Max.   :76.31046  </pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th></th><th scope=col>quantile_lag_168</th><th scope=col>quantile_lag_48</th></tr></thead>
-<tbody>
-	<tr><th scope=row>10%</th><td> 0.7727876</td><td> 0.7104752</td></tr>
-	<tr><th scope=row>25%</th><td> 2.0133265</td><td> 1.8206243</td></tr>
-	<tr><th scope=row>50%</th><td> 4.5708979</td><td> 6.1576726</td></tr>
-	<tr><th scope=row>75%</th><td> 8.4988936</td><td>12.7994874</td></tr>
-	<tr><th scope=row>90%</th><td>12.6391592</td><td>24.9016425</td></tr>
-</tbody>
-</table>
-
 </div>
 
 </div>
@@ -13509,8 +14055,10 @@ IIMYkwAAAABJRU5ErkJggg=="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1><p>From the boxplot we can say that predicting consumptions from last week instead of 2 days, give better result since box dimentison of Lag 168 is smaller. That means it has smaller standard deviation and less median error.</p>
-<p>When we comment on summary, again we see that predicting consumption with last week's data is more accurate than other. Although, there are still too many outliers which might be reasonable. Religional holidays or special days like christmast will increase the electricity consumption and we can not easliy predict consumpiton by looking last week's data.</p>
+<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1><p>With the penalized regression models we obtain more consistent boxplots.
+The error rates for the working hours are slightly more than the non-working hours.
+This is probably due to the comsumption difference for the working hours during the weekdays and weekends.</p>
+<p>Side note: We are aware of that there might be a better way of writing some parts but we keep our focus on the result rather than the scripting language.</p>
 
 </div>
 </div>

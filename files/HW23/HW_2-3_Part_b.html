@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>HW_2-3_Part_a</title>
+<title>HW_2-3_Part_b</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13077,14 +13077,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Homework-2-3-Part-(a)">Homework 2-3 Part (a)<a class="anchor-link" href="#Homework-2-3-Part-(a)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
+<h1 id="Homework-2-3-Part-(b)">Homework 2-3 Part (b)<a class="anchor-link" href="#Homework-2-3-Part-(b)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[202]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">require</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
@@ -13098,12 +13098,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[205]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Getting data</span>
+<span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
 
-<span class="c1">#Format manipulation</span>
 <span class="nf">setnames</span><span class="p">(</span><span class="n">consumption</span><span class="p">,</span><span class="nf">names</span><span class="p">(</span><span class="n">consumption</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">date</span><span class="o">:=</span><span class="nf">as.Date</span><span class="p">(</span><span class="n">Tarih</span><span class="p">,</span><span class="s">&#39;%d.%m.%Y&#39;</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">hour</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">Saat</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))]</span>
@@ -13111,62 +13111,11 @@ div#notebook {
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))]</span>
 
-<span class="nf">head</span><span class="p">(</span><span class="n">consumption</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th></tr></thead>
-<tbody>
-	<tr><td>2016-01-01</td><td>0         </td><td>26277.24  </td></tr>
-	<tr><td>2016-01-01</td><td>1         </td><td>24991.82  </td></tr>
-	<tr><td>2016-01-01</td><td>2         </td><td>23532.61  </td></tr>
-	<tr><td>2016-01-01</td><td>3         </td><td>22464.78  </td></tr>
-	<tr><td>2016-01-01</td><td>4         </td><td>22002.91  </td></tr>
-	<tr><td>2016-01-01</td><td>5         </td><td>21957.08  </td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Data has shifted to create 1 wee kand 2 days of lag. Then NA rows removed</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
+<span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">lag_48</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">48</span><span class="p">)]</span>
 
-<span class="n">full_data</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<span class="n">full_consumption</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">full_consumption</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13204,22 +13153,30 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Absolute percentage error valuesa re calculated.</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[206]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Filter consumption data in long format</span>
+<span class="n">long_tr</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&lt;</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
+<span class="n">long_te</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
+</pre></div>
 
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[207]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">full_data</span><span class="p">[,</span><span class="n">ape_168</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_168</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span> <span class="c1">#absolute percentage error</span>
-<span class="n">full_data</span><span class="p">[,</span><span class="n">ape_48</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_48</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
-<span class="nf">tail</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Fit a linear regression model and make a prediction</span>
+<span class="n">long_fit</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">value</span><span class="o">~</span><span class="n">lag_48</span><span class="o">+</span><span class="n">lag_168</span><span class="p">,</span> <span class="n">long_tr</span><span class="p">)</span>
+<span class="n">long_pred</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">long_fit</span><span class="p">,</span> <span class="n">long_te</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">long_fit</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13236,19 +13193,28 @@ div#notebook {
 
 
 
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th><th scope=col>lag_168</th><th scope=col>lag_48</th><th scope=col>ape_168</th><th scope=col>ape_48</th></tr></thead>
-<tbody>
-	<tr><td>2020-05-19</td><td>18        </td><td>30433.07  </td><td>31661.53  </td><td>30360.19  </td><td>4.036596  </td><td>0.2394763 </td></tr>
-	<tr><td>2020-05-19</td><td>19        </td><td>31670.85  </td><td>32431.97  </td><td>31802.96  </td><td>2.403219  </td><td>0.4171344 </td></tr>
-	<tr><td>2020-05-19</td><td>20        </td><td>31370.75  </td><td>31893.32  </td><td>31481.96  </td><td>1.665787  </td><td>0.3545022 </td></tr>
-	<tr><td>2020-05-19</td><td>21        </td><td>31577.82  </td><td>32262.92  </td><td>31349.23  </td><td>2.169561  </td><td>0.7238942 </td></tr>
-	<tr><td>2020-05-19</td><td>22        </td><td>31040.66  </td><td>31651.02  </td><td>30657.57  </td><td>1.966324  </td><td>1.2341555 </td></tr>
-	<tr><td>2020-05-19</td><td>23        </td><td>30283.87  </td><td>30641.29  </td><td>29582.26  </td><td>1.180232  </td><td>2.3167779 </td></tr>
-</tbody>
-</table>
 
+<div class="output_text output_subarea ">
+<pre>
+Call:
+lm(formula = value ~ lag_48 + lag_168, data = long_tr)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16854.6   -977.3     -7.7    994.7  16055.2 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.633e+03  9.207e+01   17.74   &lt;2e-16 ***
+lag_48      3.111e-01  3.345e-03   92.99   &lt;2e-16 ***
+lag_168     6.394e-01  3.341e-03  191.37   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 2371 on 36309 degrees of freedom
+Multiple R-squared:  0.7676,	Adjusted R-squared:  0.7676 
+F-statistic: 5.996e+04 on 2 and 36309 DF,  p-value: &lt; 2.2e-16
+</pre>
 </div>
 
 </div>
@@ -13259,197 +13225,108 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[208]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="n">full_data</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Create long format table &amp; calculate APE and MAPE for lag_48 and lag_168</span>
+<span class="n">long_predicted</span> <span class="o">=</span> <span class="n">long_te</span><span class="p">[,</span> <span class="n">predicted_consumption</span> <span class="o">:=</span> <span class="n">long_pred</span><span class="p">]</span>
+<span class="n">long_predicted</span> <span class="o">=</span> <span class="n">long_predicted</span><span class="p">[,</span> <span class="n">APE_LR</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">predicted_consumption</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">value</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">MAPE_LR</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">APE_LR</span><span class="p">)</span>
+</pre></div>
 
-<span class="nf">boxplot</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lag 168&quot;</span><span class="p">,</span><span class="s">&quot;Lag 48&quot;</span><span class="p">))</span>
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[209]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Fit a linear regression model and make a prediction</span>
+<span class="n">long_fit</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">value</span><span class="o">~</span><span class="n">lag_48</span><span class="o">+</span><span class="n">lag_168</span><span class="p">,</span> <span class="n">long_tr</span><span class="p">)</span>
+<span class="n">long_pred</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">long_fit</span><span class="p">,</span> <span class="n">long_te</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">long_fit</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_text output_subarea ">
+<pre>
+Call:
+lm(formula = value ~ lag_48 + lag_168, data = long_tr)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-16854.6   -977.3     -7.7    994.7  16055.2 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 1.633e+03  9.207e+01   17.74   &lt;2e-16 ***
+lag_48      3.111e-01  3.345e-03   92.99   &lt;2e-16 ***
+lag_168     6.394e-01  3.341e-03  191.37   &lt;2e-16 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 2371 on 36309 degrees of freedom
+Multiple R-squared:  0.7676,	Adjusted R-squared:  0.7676 
+F-statistic: 5.996e+04 on 2 and 36309 DF,  p-value: &lt; 2.2e-16
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[210]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Create long format table &amp; calculate APE and MAPE for lag_48 and lag_168</span>
+<span class="n">long_predicted</span> <span class="o">=</span> <span class="n">long_te</span><span class="p">[,</span> <span class="n">predicted_consumption</span> <span class="o">:=</span> <span class="n">long_pred</span><span class="p">]</span>
+<span class="n">long_predicted</span> <span class="o">=</span> <span class="n">long_predicted</span><span class="p">[,</span> <span class="n">APE_LR</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">predicted_consumption</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">value</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">MAPE_LR</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">APE_LR</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[211]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="n">full_consumption</span><span class="p">[,</span><span class="n">ape_168</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">lag_168</span><span class="p">)</span><span class="o">/</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span> <span class="c1">#absolute percentage error</span>
+<span class="n">full_consumption</span><span class="p">[,</span><span class="n">ape_48</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">lag_48</span><span class="p">)</span><span class="o">/</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span><span class="n">full_consumption</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">APE_LR</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lag 168&quot;</span><span class="p">,</span><span class="s">&quot;Lag 48&quot;</span><span class="p">,</span><span class="s">&quot;Linear Regression&quot;</span><span class="p">))</span>
 <span class="nf">title</span><span class="p">(</span><span class="s">&quot;Absolute Percentage Error&quot;</span><span class="p">)</span>
-</pre></div>
 
-    </div>
-</div>
-</div>
+<span class="nf">summary</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">APE_LR</span><span class="p">)</span>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-IIMYkwAAAABJRU5ErkJggg=="
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">full_data</span><span class="p">[,</span><span class="m">6</span><span class="o">:</span><span class="m">7</span><span class="p">])</span>
-
-<span class="n">quantile_lag_168</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">quantile_lag_48</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_lag_168</span><span class="p">,</span><span class="n">quantile_lag_48</span><span class="p">)</span>
+<span class="n">quantile_lag_168</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">compare</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_lag_48</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">compare</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_lin_reg</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">long_predicted</span><span class="o">$</span><span class="n">APE_LR</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_lag_168</span><span class="p">,</span><span class="n">quantile_lag_48</span><span class="p">,</span><span class="n">quantile_lin_reg</span><span class="p">)</span>
 <span class="n">q_all</span>
 </pre></div>
 
@@ -13469,13 +13346,8 @@ IIMYkwAAAABJRU5ErkJggg=="
 
 
 <div class="output_text output_subarea ">
-<pre>    ape_168             ape_48        
- Min.   : 0.00006   Min.   : 0.00018  
- 1st Qu.: 1.17450   1st Qu.: 1.70450  
- Median : 2.70960   Median : 5.36646  
- Mean   : 4.93208   Mean   : 7.97246  
- 3rd Qu.: 5.29220   3rd Qu.:10.56880  
- Max.   :87.97862   Max.   :76.31046  </pre>
+<pre>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+ 0.01148  1.83166  4.03732  5.69813  7.61776 41.19968 </pre>
 </div>
 
 </div>
@@ -13488,16 +13360,209 @@ IIMYkwAAAABJRU5ErkJggg=="
 
 <div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th></th><th scope=col>quantile_lag_168</th><th scope=col>quantile_lag_48</th></tr></thead>
+<thead><tr><th></th><th scope=col>quantile_lag_168</th><th scope=col>quantile_lag_48</th><th scope=col>quantile_lin_reg</th></tr></thead>
 <tbody>
-	<tr><th scope=row>10%</th><td> 0.7727876</td><td> 0.7104752</td></tr>
-	<tr><th scope=row>25%</th><td> 2.0133265</td><td> 1.8206243</td></tr>
-	<tr><th scope=row>50%</th><td> 4.5708979</td><td> 6.1576726</td></tr>
-	<tr><th scope=row>75%</th><td> 8.4988936</td><td>12.7994874</td></tr>
-	<tr><th scope=row>90%</th><td>12.6391592</td><td>24.9016425</td></tr>
+	<tr><th scope=row>10%</th><td> 0.7727876</td><td> 0.7104752</td><td> 0.7542483</td></tr>
+	<tr><th scope=row>25%</th><td> 2.0133265</td><td> 1.8206243</td><td> 1.8316559</td></tr>
+	<tr><th scope=row>50%</th><td> 4.5708979</td><td> 6.1576726</td><td> 4.0373182</td></tr>
+	<tr><th scope=row>75%</th><td> 8.4988936</td><td>12.7994874</td><td> 7.6177555</td></tr>
+	<tr><th scope=row>90%</th><td>12.6391592</td><td>24.9016425</td><td>12.5462119</td></tr>
 </tbody>
 </table>
 
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+OdW9bzl8/LhdcJhcewjI65VdSytQzuOB5aSFh7F0ZzCT0ZsTchp2SfcnTGq8PuH+za/bD/t6
+/LHT60iTn74EYiJdDsab9fd+OOTetZfHtkjdFfHJbQJtzP1RSmW30pYv56lI3Y0G4z3299Hb
+E7IbCrs/4V7j7Qn3b/b3M3w/PBoD29udDdOfvgASIs0RdV/z7+hWdqeeGnVF6i+mD3d4i6Fb
+2Z3qatQVaby9K+Zq3D+hW9md6mrUFen8eTl8XlXzjpaCbmV3aqtRWCSA5UAkAAcQCcABRAJw
+AJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQ
+CcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEA
+HEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcAB
+RAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAk
+AAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcABRAJwAJEAHEAkAAcQCcCB/wAb
+9I7Rw+ACigAAAABJRU5ErkJggg=="
+>
 </div>
 
 </div>
@@ -13509,11 +13574,25 @@ IIMYkwAAAABJRU5ErkJggg=="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1><p>From the boxplot we can say that predicting consumptions from last week instead of 2 days, give better result since box dimentison of Lag 168 is smaller. That means it has smaller standard deviation and less median error.</p>
-<p>When we comment on summary, again we see that predicting consumption with last week's data is more accurate than other. Although, there are still too many outliers which might be reasonable. Religional holidays or special days like christmast will increase the electricity consumption and we can not easliy predict consumpiton by looking last week's data.</p>
+<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1><p>Comparing the boxplot of the linear regression model with lag forecasting, we see that the regression boxplot is more similar to the lag_168 forecast.</p>
+<p>The main difference is that the second half of the interquartile range (Q3-Q2) is wider (has little more variance) and has slightly more outliers.</p>
+<p>We can conclude that the consumption of previous week's same time is pretty much as good as using linear regression with 48 and 168 hour lags.</p>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div>
     </div>
   </div>

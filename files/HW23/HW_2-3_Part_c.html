@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>HW_2-3_Part_a</title>
+<title>HW_2-3_Part_c</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13077,14 +13077,14 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Homework-2-3-Part-(a)">Homework 2-3 Part (a)<a class="anchor-link" href="#Homework-2-3-Part-(a)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
+<h1 id="Homework-2-3-Part-(c)">Homework 2-3 Part (c)<a class="anchor-link" href="#Homework-2-3-Part-(c)">&#182;</a></h1><p>Prepared with Ceren Demirkol, Okan Güven, Sevgican Varol</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[220]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">require</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
@@ -13098,12 +13098,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[212]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">#Getting data</span>
+<span class="n">consumption</span><span class="o">=</span><span class="nf">fread</span><span class="p">(</span><span class="s">&quot;C:/Users/ceren.orhan/Desktop/ETM 58D/HW2-3/GercekZamanliTuketim-01012016-19052020.csv&quot;</span><span class="p">)</span>
 
-<span class="c1">#Format manipulation</span>
 <span class="nf">setnames</span><span class="p">(</span><span class="n">consumption</span><span class="p">,</span><span class="nf">names</span><span class="p">(</span><span class="n">consumption</span><span class="p">)[</span><span class="m">3</span><span class="p">],</span><span class="s">&#39;value&#39;</span><span class="p">)</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">date</span><span class="o">:=</span><span class="nf">as.Date</span><span class="p">(</span><span class="n">Tarih</span><span class="p">,</span><span class="s">&#39;%d.%m.%Y&#39;</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">hour</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">substr</span><span class="p">(</span><span class="n">Saat</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">))]</span>
@@ -13111,62 +13111,11 @@ div#notebook {
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">value</span><span class="o">:=</span><span class="nf">as.numeric</span><span class="p">(</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="s">&quot;.&quot;</span><span class="p">,</span><span class="n">value</span><span class="p">,</span> <span class="n">fixed</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))]</span>
 
-<span class="nf">head</span><span class="p">(</span><span class="n">consumption</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th></tr></thead>
-<tbody>
-	<tr><td>2016-01-01</td><td>0         </td><td>26277.24  </td></tr>
-	<tr><td>2016-01-01</td><td>1         </td><td>24991.82  </td></tr>
-	<tr><td>2016-01-01</td><td>2         </td><td>23532.61  </td></tr>
-	<tr><td>2016-01-01</td><td>3         </td><td>22464.78  </td></tr>
-	<tr><td>2016-01-01</td><td>4         </td><td>22002.91  </td></tr>
-	<tr><td>2016-01-01</td><td>5         </td><td>21957.08  </td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Data has shifted to create 1 wee kand 2 days of lag. Then NA rows removed</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
+<span class="n">consumption</span><span class="p">[,</span><span class="n">lag_168</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">168</span><span class="p">)]</span>
 <span class="n">consumption</span><span class="p">[,</span><span class="n">lag_48</span><span class="o">:=</span><span class="nf">shift</span><span class="p">(</span><span class="n">value</span><span class="p">,</span><span class="m">48</span><span class="p">)]</span>
 
-<span class="n">full_data</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<span class="n">full_consumption</span><span class="o">=</span><span class="n">consumption</span><span class="p">[</span><span class="nf">complete.cases</span><span class="p">(</span><span class="n">consumption</span><span class="p">)]</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">full_consumption</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13204,22 +13153,271 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Absolute percentage error valuesa re calculated.</p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[213]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Filter consumption data in long format</span>
+<span class="n">long_tr</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&lt;</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
+<span class="n">long_te</span> <span class="o">=</span> <span class="n">full_consumption</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
 
+<span class="c1"># Create training and test consumption data in wide format with lag_168</span>
+<span class="n">wide_tr</span> <span class="o">=</span> <span class="nf">merge</span><span class="p">(</span><span class="nf">dcast</span><span class="p">(</span><span class="n">long_tr</span><span class="p">,</span><span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;actual_hour_&#39;</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;value&#39;</span><span class="p">),</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_tr</span><span class="p">,</span><span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_168_hour_&#39;</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span><span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_168&#39;</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s">&#39;date&#39;</span><span class="p">)</span>
+<span class="n">wide_te</span> <span class="o">=</span> <span class="nf">merge</span><span class="p">(</span><span class="nf">dcast</span><span class="p">(</span><span class="n">long_te</span><span class="p">,</span><span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;actual_hour_&#39;</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span> <span class="n">value.var</span><span class="o">=</span><span class="s">&#39;value&#39;</span><span class="p">),</span> <span class="nf">dcast</span><span class="p">(</span><span class="n">long_te</span><span class="p">,</span><span class="n">date</span><span class="o">~</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;lag_168_hour_&#39;</span><span class="p">,</span><span class="n">hour</span><span class="p">),</span><span class="n">value.var</span><span class="o">=</span><span class="s">&#39;lag_168&#39;</span><span class="p">),</span> <span class="n">by</span> <span class="o">=</span> <span class="s">&#39;date&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[214]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">full_data</span><span class="p">[,</span><span class="n">ape_168</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_168</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span> <span class="c1">#absolute percentage error</span>
-<span class="n">full_data</span><span class="p">[,</span><span class="n">ape_48</span><span class="o">:=</span><span class="nf">abs</span><span class="p">(</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">-</span><span class="n">full_data</span><span class="o">$</span><span class="n">lag_48</span><span class="p">)</span><span class="o">/</span><span class="n">full_data</span><span class="o">$</span><span class="n">value</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
-<span class="nf">tail</span><span class="p">(</span><span class="n">full_data</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Fit linear regression models</span>
+<span class="n">wide_fit_0</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_0</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_1</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_1</span><span class="o">~</span><span class="n">lag_168_hour_1</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_2</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_2</span><span class="o">~</span><span class="n">lag_168_hour_2</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_3</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_3</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_4</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_4</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_5</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_5</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_6</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_6</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_7</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_7</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_8</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_8</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_9</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_9</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_10</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_10</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_11</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_11</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_12</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_12</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_13</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_13</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_14</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_14</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_15</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_15</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_16</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_16</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_17</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_17</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_18</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_18</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_19</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_19</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_20</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_20</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_21</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_21</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_22</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_22</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+<span class="n">wide_fit_23</span> <span class="o">=</span> <span class="nf">lm</span><span class="p">(</span><span class="n">actual_hour_0</span><span class="o">~</span><span class="n">lag_168_hour_23</span><span class="p">,</span> <span class="n">wide_tr</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[215]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Make prediction with linear regression models</span>
+<span class="n">wide_pred_0</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_0</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_1</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_1</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_2</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_2</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_3</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_3</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_4</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_4</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_5</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_5</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_6</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_6</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_7</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_7</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_8</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_8</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_9</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_9</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_10</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_10</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_11</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_11</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_12</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_12</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_13</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_13</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_14</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_14</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_15</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_15</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_16</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_16</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_17</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_17</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_18</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_18</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_19</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_19</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_20</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_20</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_21</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_21</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_22</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_22</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+<span class="n">wide_pred_23</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">wide_fit_23</span><span class="p">,</span> <span class="n">wide_te</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[216]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Create wide format table with predicted consumption</span>
+<span class="c1">#wide_predicted = data.frame(wide_predicted, wide_predicted[1:25])</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_te</span><span class="p">[,</span> <span class="m">1</span><span class="o">:</span><span class="m">25</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_0</span> <span class="o">:=</span> <span class="n">wide_pred_0</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_1</span> <span class="o">:=</span> <span class="n">wide_pred_1</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_2</span> <span class="o">:=</span> <span class="n">wide_pred_2</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_3</span> <span class="o">:=</span> <span class="n">wide_pred_3</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_4</span> <span class="o">:=</span> <span class="n">wide_pred_4</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_5</span> <span class="o">:=</span> <span class="n">wide_pred_5</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_6</span> <span class="o">:=</span> <span class="n">wide_pred_6</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_7</span> <span class="o">:=</span> <span class="n">wide_pred_7</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_8</span> <span class="o">:=</span> <span class="n">wide_pred_8</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_9</span> <span class="o">:=</span> <span class="n">wide_pred_9</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_10</span> <span class="o">:=</span> <span class="n">wide_pred_10</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_11</span> <span class="o">:=</span> <span class="n">wide_pred_11</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_12</span> <span class="o">:=</span> <span class="n">wide_pred_12</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_13</span> <span class="o">:=</span> <span class="n">wide_pred_13</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_14</span> <span class="o">:=</span> <span class="n">wide_pred_14</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_15</span> <span class="o">:=</span> <span class="n">wide_pred_15</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_16</span> <span class="o">:=</span> <span class="n">wide_pred_16</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_17</span> <span class="o">:=</span> <span class="n">wide_pred_17</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_18</span> <span class="o">:=</span> <span class="n">wide_pred_18</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_19</span> <span class="o">:=</span> <span class="n">wide_pred_19</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_20</span> <span class="o">:=</span> <span class="n">wide_pred_20</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_21</span> <span class="o">:=</span> <span class="n">wide_pred_21</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_22</span> <span class="o">:=</span> <span class="n">wide_pred_22</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">predicted_23</span> <span class="o">:=</span> <span class="n">wide_pred_23</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[217]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># calculate APE for predicted consumption</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H0</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_0</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_0</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_0</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H1</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_1</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_1</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_1</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H2</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_2</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_2</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_2</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H3</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_3</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_3</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_3</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H4</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_4</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_4</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_4</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H5</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_5</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_5</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_5</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H6</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_6</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_6</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_6</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H7</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_7</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_7</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_7</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H8</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_8</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_8</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_8</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H9</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_9</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_9</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_9</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H10</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_10</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_10</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_10</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H11</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_11</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_11</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_11</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H12</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_12</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_12</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_12</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H13</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_13</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_13</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_13</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H14</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_14</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_14</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_14</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H15</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_15</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_15</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_15</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H16</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_16</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_16</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_16</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H17</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_17</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_17</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_17</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H18</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_18</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_18</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_18</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H19</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_19</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_19</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_19</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H20</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_20</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_20</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_20</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H21</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_21</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_21</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_21</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H22</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_22</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_22</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_22</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+<span class="n">wide_predicted</span> <span class="o">=</span> <span class="n">wide_predicted</span><span class="p">[,</span> <span class="n">APE_H23</span><span class="o">:=</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_23</span><span class="o">-</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">predicted_23</span><span class="p">)</span><span class="o">/</span><span class="nf">abs</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">actual_hour_23</span><span class="p">))</span><span class="o">*</span><span class="m">100</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[218]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># calculate MAPE for predicted consumption</span>
+<span class="n">wide_MAPE_0</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H0</span><span class="p">)</span>
+<span class="n">wide_MAPE_1</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H1</span><span class="p">)</span>
+<span class="n">wide_MAPE_2</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H2</span><span class="p">)</span>
+<span class="n">wide_MAPE_3</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H3</span><span class="p">)</span>
+<span class="n">wide_MAPE_4</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H4</span><span class="p">)</span>
+<span class="n">wide_MAPE_5</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H5</span><span class="p">)</span>
+<span class="n">wide_MAPE_6</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H6</span><span class="p">)</span>
+<span class="n">wide_MAPE_7</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H7</span><span class="p">)</span>
+<span class="n">wide_MAPE_8</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H8</span><span class="p">)</span>
+<span class="n">wide_MAPE_9</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H9</span><span class="p">)</span>
+<span class="n">wide_MAPE_10</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H10</span><span class="p">)</span>
+<span class="n">wide_MAPE_11</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H11</span><span class="p">)</span>
+<span class="n">wide_MAPE_12</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H12</span><span class="p">)</span>
+<span class="n">wide_MAPE_13</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H13</span><span class="p">)</span>
+<span class="n">wide_MAPE_14</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H14</span><span class="p">)</span>
+<span class="n">wide_MAPE_15</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H15</span><span class="p">)</span>
+<span class="n">wide_MAPE_16</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H16</span><span class="p">)</span>
+<span class="n">wide_MAPE_17</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H17</span><span class="p">)</span>
+<span class="n">wide_MAPE_18</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H18</span><span class="p">)</span>
+<span class="n">wide_MAPE_19</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H19</span><span class="p">)</span>
+<span class="n">wide_MAPE_20</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H20</span><span class="p">)</span>
+<span class="n">wide_MAPE_21</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H21</span><span class="p">)</span>
+<span class="n">wide_MAPE_22</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H22</span><span class="p">)</span>
+<span class="n">wide_MAPE_23</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H23</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[219]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Display summary statistics</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">wide_predicted</span><span class="p">[,</span><span class="m">50</span><span class="o">:</span><span class="m">73</span><span class="p">])</span> <span class="c1"># for APE values</span>
+
+<span class="n">quantile_hour0</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H0</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour1</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H1</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour2</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H2</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour3</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H3</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour4</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H4</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour5</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H5</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour6</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H6</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour7</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H7</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour8</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H8</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour9</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H9</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour10</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H10</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour11</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H11</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour12</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H12</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour13</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H13</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour14</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H14</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour15</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H15</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour16</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H16</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour17</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H17</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour18</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H18</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour19</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H19</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour20</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H20</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour21</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H21</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour22</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H22</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+<span class="n">quantile_hour23</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">wide_predicted</span><span class="o">$</span><span class="n">APE_H23</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
+
+<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_hour0</span><span class="p">,</span>
+            <span class="n">quantile_hour1</span><span class="p">,</span>
+            <span class="n">quantile_hour2</span><span class="p">,</span>
+            <span class="n">quantile_hour3</span><span class="p">,</span>
+            <span class="n">quantile_hour4</span><span class="p">,</span>
+            <span class="n">quantile_hour5</span><span class="p">,</span>
+            <span class="n">quantile_hour6</span><span class="p">,</span>
+            <span class="n">quantile_hour7</span><span class="p">,</span>
+            <span class="n">quantile_hour8</span><span class="p">,</span>
+            <span class="n">quantile_hour9</span><span class="p">,</span>
+            <span class="n">quantile_hour10</span><span class="p">,</span>
+            <span class="n">quantile_hour11</span><span class="p">,</span>
+            <span class="n">quantile_hour12</span><span class="p">,</span>
+            <span class="n">quantile_hour13</span><span class="p">,</span>
+            <span class="n">quantile_hour14</span><span class="p">,</span>
+            <span class="n">quantile_hour15</span><span class="p">,</span>
+            <span class="n">quantile_hour16</span><span class="p">,</span>
+            <span class="n">quantile_hour17</span><span class="p">,</span>
+            <span class="n">quantile_hour18</span><span class="p">,</span>
+            <span class="n">quantile_hour19</span><span class="p">,</span>
+            <span class="n">quantile_hour20</span><span class="p">,</span>
+            <span class="n">quantile_hour21</span><span class="p">,</span>
+            <span class="n">quantile_hour22</span><span class="p">,</span>
+            <span class="n">quantile_hour23</span><span class="p">)</span>
+
+<span class="n">q_all</span>
 </pre></div>
 
     </div>
@@ -13236,16 +13434,69 @@ div#notebook {
 
 
 
+
+<div class="output_text output_subarea ">
+<pre>     APE_H0             APE_H1             APE_H2             APE_H3      
+ Min.   : 0.03091   Min.   : 0.05774   Min.   : 0.01982   Min.   : 1.749  
+ 1st Qu.: 1.25424   1st Qu.: 1.46751   1st Qu.: 1.37021   1st Qu.:11.638  
+ Median : 3.71368   Median : 4.05013   Median : 4.52609   Median :15.091  
+ Mean   : 4.37286   Mean   : 4.42039   Mean   : 4.65492   Mean   :15.564  
+ 3rd Qu.: 6.53782   3rd Qu.: 6.52903   3rd Qu.: 7.36666   3rd Qu.:20.824  
+ Max.   :17.12464   Max.   :17.29339   Max.   :17.01919   Max.   :33.057  
+     APE_H4           APE_H5           APE_H6           APE_H7     
+ Min.   : 3.811   Min.   : 7.514   Min.   : 8.246   Min.   : 3.78  
+ 1st Qu.:13.383   1st Qu.:15.664   1st Qu.:17.061   1st Qu.:16.44  
+ Median :16.994   Median :19.542   Median :23.371   Median :21.86  
+ Mean   :17.371   Mean   :19.694   Mean   :22.728   Mean   :22.22  
+ 3rd Qu.:22.431   3rd Qu.:23.730   3rd Qu.:27.755   3rd Qu.:28.50  
+ Max.   :34.490   Max.   :36.515   Max.   :44.199   Max.   :51.15  
+     APE_H8           APE_H9           APE_H10            APE_H11       
+ Min.   : 1.512   Min.   : 0.7052   Min.   : 0.02245   Min.   : 0.2929  
+ 1st Qu.: 8.476   1st Qu.: 5.8566   1st Qu.: 3.57588   1st Qu.: 3.8709  
+ Median :13.520   Median :11.7804   Median : 9.85948   Median : 7.2819  
+ Mean   :17.442   Mean   :14.9110   Mean   :12.83456   Mean   :11.3361  
+ 3rd Qu.:20.383   3rd Qu.:17.3066   3rd Qu.:18.56747   3rd Qu.:15.4001  
+ Max.   :60.771   Max.   :62.5129   Max.   :58.27387   Max.   :51.7869  
+    APE_H12           APE_H13           APE_H14            APE_H15        
+ Min.   : 0.1122   Min.   : 0.1414   Min.   : 0.04451   Min.   : 0.05971  
+ 1st Qu.: 2.9461   1st Qu.: 3.3861   1st Qu.: 3.69817   1st Qu.: 3.76325  
+ Median : 6.9760   Median : 6.1866   Median : 6.97402   Median : 6.75082  
+ Mean   :10.0373   Mean   : 9.2992   Mean   : 9.41273   Mean   : 8.93436  
+ 3rd Qu.:13.6592   3rd Qu.:12.8039   3rd Qu.:13.15296   3rd Qu.:12.30857  
+ Max.   :47.6097   Max.   :45.0147   Max.   :44.42113   Max.   :40.05998  
+    APE_H16          APE_H17           APE_H18            APE_H19       
+ Min.   : 0.161   Min.   : 0.2683   Min.   : 0.02617   Min.   : 0.1149  
+ 1st Qu.: 3.873   1st Qu.: 3.7194   1st Qu.: 3.67857   1st Qu.: 6.5742  
+ Median : 7.121   Median : 6.8442   Median : 6.98089   Median : 8.3222  
+ Mean   : 8.606   Mean   : 8.0131   Mean   : 7.49116   Mean   : 9.0132  
+ 3rd Qu.:11.883   3rd Qu.:10.5073   3rd Qu.:10.51716   3rd Qu.:12.5364  
+ Max.   :34.222   Max.   :24.9968   Max.   :19.47231   Max.   :19.7619  
+    APE_H20           APE_H21            APE_H22           APE_H23        
+ Min.   : 0.1998   Min.   : 0.02217   Min.   : 0.2275   Min.   : 0.05222  
+ 1st Qu.: 6.4409   1st Qu.: 5.07573   1st Qu.: 3.7274   1st Qu.: 1.51538  
+ Median : 8.5501   Median : 8.12066   Median : 6.0373   Median : 3.28717  
+ Mean   : 9.2051   Mean   : 8.09262   Mean   : 6.4651   Mean   : 4.07788  
+ 3rd Qu.:12.4935   3rd Qu.:11.33670   3rd Qu.: 9.4742   3rd Qu.: 6.30070  
+ Max.   :18.5262   Max.   :16.30168   Max.   :14.6195   Max.   :12.25404  </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
 <div class="output_html rendered_html output_subarea ">
 <table>
-<thead><tr><th scope=col>date</th><th scope=col>hour</th><th scope=col>value</th><th scope=col>lag_168</th><th scope=col>lag_48</th><th scope=col>ape_168</th><th scope=col>ape_48</th></tr></thead>
+<thead><tr><th></th><th scope=col>quantile_hour0</th><th scope=col>quantile_hour1</th><th scope=col>quantile_hour2</th><th scope=col>quantile_hour3</th><th scope=col>quantile_hour4</th><th scope=col>quantile_hour5</th><th scope=col>quantile_hour6</th><th scope=col>quantile_hour7</th><th scope=col>quantile_hour8</th><th scope=col>quantile_hour9</th><th scope=col>...</th><th scope=col>quantile_hour14</th><th scope=col>quantile_hour15</th><th scope=col>quantile_hour16</th><th scope=col>quantile_hour17</th><th scope=col>quantile_hour18</th><th scope=col>quantile_hour19</th><th scope=col>quantile_hour20</th><th scope=col>quantile_hour21</th><th scope=col>quantile_hour22</th><th scope=col>quantile_hour23</th></tr></thead>
 <tbody>
-	<tr><td>2020-05-19</td><td>18        </td><td>30433.07  </td><td>31661.53  </td><td>30360.19  </td><td>4.036596  </td><td>0.2394763 </td></tr>
-	<tr><td>2020-05-19</td><td>19        </td><td>31670.85  </td><td>32431.97  </td><td>31802.96  </td><td>2.403219  </td><td>0.4171344 </td></tr>
-	<tr><td>2020-05-19</td><td>20        </td><td>31370.75  </td><td>31893.32  </td><td>31481.96  </td><td>1.665787  </td><td>0.3545022 </td></tr>
-	<tr><td>2020-05-19</td><td>21        </td><td>31577.82  </td><td>32262.92  </td><td>31349.23  </td><td>2.169561  </td><td>0.7238942 </td></tr>
-	<tr><td>2020-05-19</td><td>22        </td><td>31040.66  </td><td>31651.02  </td><td>30657.57  </td><td>1.966324  </td><td>1.2341555 </td></tr>
-	<tr><td>2020-05-19</td><td>23        </td><td>30283.87  </td><td>30641.29  </td><td>29582.26  </td><td>1.180232  </td><td>2.3167779 </td></tr>
+	<tr><th scope=row>10%</th><td>0.4862432 </td><td>0.5616984 </td><td>0.5973676 </td><td> 7.41536  </td><td> 8.980602 </td><td>12.51076  </td><td>10.41912  </td><td> 5.449933 </td><td> 5.328471 </td><td> 2.169617 </td><td>...       </td><td> 0.9512929</td><td> 1.443558 </td><td> 2.231547 </td><td> 1.968434 </td><td> 1.781759 </td><td> 2.822575 </td><td> 4.505608 </td><td> 2.940776 </td><td> 1.558514 </td><td>0.2756153 </td></tr>
+	<tr><th scope=row>25%</th><td>1.2542413 </td><td>1.4675070 </td><td>1.3702126 </td><td>11.63776  </td><td>13.383169 </td><td>15.66442  </td><td>17.06122  </td><td>16.435842 </td><td> 8.476098 </td><td> 5.856620 </td><td>...       </td><td> 3.6981740</td><td> 3.763253 </td><td> 3.873087 </td><td> 3.719404 </td><td> 3.678568 </td><td> 6.574154 </td><td> 6.440950 </td><td> 5.075735 </td><td> 3.727411 </td><td>1.5153759 </td></tr>
+	<tr><th scope=row>50%</th><td>3.7136794 </td><td>4.0501246 </td><td>4.5260922 </td><td>15.09053  </td><td>16.993887 </td><td>19.54248  </td><td>23.37100  </td><td>21.859515 </td><td>13.519514 </td><td>11.780439 </td><td>...       </td><td> 6.9740182</td><td> 6.750822 </td><td> 7.120862 </td><td> 6.844190 </td><td> 6.980888 </td><td> 8.322249 </td><td> 8.550050 </td><td> 8.120663 </td><td> 6.037332 </td><td>3.2871658 </td></tr>
+	<tr><th scope=row>75%</th><td>6.5378200 </td><td>6.5290336 </td><td>7.3666602 </td><td>20.82352  </td><td>22.430710 </td><td>23.73049  </td><td>27.75451  </td><td>28.501244 </td><td>20.382856 </td><td>17.306552 </td><td>...       </td><td>13.1529627</td><td>12.308567 </td><td>11.882563 </td><td>10.507338 </td><td>10.517157 </td><td>12.536404 </td><td>12.493457 </td><td>11.336701 </td><td> 9.474173 </td><td>6.3007031 </td></tr>
+	<tr><th scope=row>90%</th><td>8.5477957 </td><td>8.3936829 </td><td>8.3543642 </td><td>22.20529  </td><td>24.322582 </td><td>27.08139  </td><td>33.04800  </td><td>38.793394 </td><td>36.988564 </td><td>34.577273 </td><td>...       </td><td>19.4100127</td><td>18.467889 </td><td>17.557349 </td><td>14.668786 </td><td>14.178669 </td><td>15.205228 </td><td>14.458362 </td><td>13.151602 </td><td>10.966660 </td><td>9.0123930 </td></tr>
 </tbody>
 </table>
 
@@ -13259,12 +13510,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[201]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="n">test</span><span class="o">=</span><span class="n">full_data</span><span class="p">[</span><span class="n">date</span> <span class="o">&gt;=</span> <span class="s">&#39;2020-03-01&#39;</span><span class="p">]</span>
-
-<span class="nf">boxplot</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Lag 168&quot;</span><span class="p">,</span><span class="s">&quot;Lag 48&quot;</span><span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1"># Plot a boxplot for hourly APE</span>
+<span class="nf">boxplot</span><span class="p">(</span><span class="n">wide_predicted</span><span class="p">[,</span><span class="m">50</span><span class="o">:</span><span class="m">73</span><span class="p">])</span>
 <span class="nf">title</span><span class="p">(</span><span class="s">&quot;Absolute Percentage Error&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -13286,218 +13536,208 @@ div#notebook {
 <div class="output_png output_subarea ">
 <img src="data:image/png;base64,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
-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
-IIMYkwAAAABJRU5ErkJggg=="
+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
+QmCC"
 >
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="nf">summary</span><span class="p">(</span><span class="n">full_data</span><span class="p">[,</span><span class="m">6</span><span class="o">:</span><span class="m">7</span><span class="p">])</span>
-
-<span class="n">quantile_lag_168</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_168</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">quantile_lag_48</span><span class="o">=</span><span class="nf">quantile</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">ape_48</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.75</span><span class="p">,</span> <span class="m">0.9</span><span class="p">))</span>
-<span class="n">q_all</span><span class="o">=</span><span class="nf">cbind</span><span class="p">(</span><span class="n">quantile_lag_168</span><span class="p">,</span><span class="n">quantile_lag_48</span><span class="p">)</span>
-<span class="n">q_all</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_text output_subarea ">
-<pre>    ape_168             ape_48        
- Min.   : 0.00006   Min.   : 0.00018  
- 1st Qu.: 1.17450   1st Qu.: 1.70450  
- Median : 2.70960   Median : 5.36646  
- Mean   : 4.93208   Mean   : 7.97246  
- 3rd Qu.: 5.29220   3rd Qu.:10.56880  
- Max.   :87.97862   Max.   :76.31046  </pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-<div class="output_html rendered_html output_subarea ">
-<table>
-<thead><tr><th></th><th scope=col>quantile_lag_168</th><th scope=col>quantile_lag_48</th></tr></thead>
-<tbody>
-	<tr><th scope=row>10%</th><td> 0.7727876</td><td> 0.7104752</td></tr>
-	<tr><th scope=row>25%</th><td> 2.0133265</td><td> 1.8206243</td></tr>
-	<tr><th scope=row>50%</th><td> 4.5708979</td><td> 6.1576726</td></tr>
-	<tr><th scope=row>75%</th><td> 8.4988936</td><td>12.7994874</td></tr>
-	<tr><th scope=row>90%</th><td>12.6391592</td><td>24.9016425</td></tr>
-</tbody>
-</table>
-
 </div>
 
 </div>
@@ -13509,8 +13749,16 @@ IIMYkwAAAABJRU5ErkJggg=="
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1><p>From the boxplot we can say that predicting consumptions from last week instead of 2 days, give better result since box dimentison of Lag 168 is smaller. That means it has smaller standard deviation and less median error.</p>
-<p>When we comment on summary, again we see that predicting consumption with last week's data is more accurate than other. Although, there are still too many outliers which might be reasonable. Religional holidays or special days like christmast will increase the electricity consumption and we can not easliy predict consumpiton by looking last week's data.</p>
+<h1 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From the box plot, first thing we see is that consumption is higher in the morning. When we chek the deviations we see that night hours has smaller deviation and less number of outliers than that of during the day.<br>
+We can also say that when mean error increase in prediction, max error values and number of outliers also increase.</p>
+<p>Side note: We are aware of that there might be a better way of writing some parts but we keep our focus on the result rather than the scripting language.</p>
 
 </div>
 </div>
