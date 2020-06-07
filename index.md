@@ -8,3 +8,14 @@ You can find the answers of the homework 1 which we prepared as a group with [Ok
 * [Question 1](files/hw1_q1.html)
 * [Question 2](files/Homework1-Question2.html)
 * [Question 3](files/hw1_q3.html)
+
+## Homework 2-3
+You can find the answers of the homework 2-3 which we prepared as a group with [Okan Güven](https://etm-58d.github.io/spring20-guven80/) and [Sevgican Varol](https://etm-58d.github.io/spring20-sevgicanvrl).
+
+* [part (a)](files/HW23/HW_2-3_Part_a.html)
+* [part (b)](files/HW23/HW_2-3_Part_b.html)
+* [part (c)](files/HW23/HW_2-3_Part_c.html)
+* [part (d)](files/HW23/HW_2-3_Part_d.html)
+
+
+
