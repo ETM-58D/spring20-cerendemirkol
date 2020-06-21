@@ -17,6 +17,8 @@ You can find the answers of the homework 2-3 which we prepared as a group with [
 * [Part C](files/HW23/HW_2-3_Part_c.html)
 * [Part D](files/HW23/HW_2-3_Part_d.html)
 
+## Homework 4 
+You can find the answers of the homework 4 [here](files/HW4) which we prepared as a group with [Okan Güven](https://etm-58d.github.io/spring20-guven80/) and [Sevgican Varol](https://etm-58d.github.io/spring20-sevgicanvrl).
 
 
 
