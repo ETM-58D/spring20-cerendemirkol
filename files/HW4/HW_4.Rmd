@@ -25,7 +25,6 @@ In this app:
 - Since we user lag-48 approach for forecasting, to see the forecasting plot; the selected end date should be no later than December 27, 2019. If user selects an end date after this date, a warning is displayed below the date range selection component. 
 
 - If user selects an end date before the starting date, a warning message is displayed for the use; stating that the end date should be on or after the start date.
-
 ```{r}
 # Include libraries
 library("data.table")
@@ -66,7 +65,7 @@ server = function(input, output)
   
   # Convert "Date" to "Date" type
   data_date = data
-  data_date[, Date:=as.Date(Date, format = '%d-%m-%y')]
+  data_date[, Date:=as.Date(Date, format = '%Y-%m-%d')]
   
   # Filter data for table
   data_table_output = eventReactive(input$button_display, {
@@ -218,17 +217,23 @@ server = function(input, output)
   
   output$plot_consumption = renderPlot({input$button_plot
     data_plot_consumption()
+    grid()
+    
   })
   
   output$plot_temperature = renderPlot({input$button_plot
     data_plot_temperature()
+    grid()
   })
   
   output$plot_forecast = renderPlot({input$button_plot
     data_plot_forecast()
+    grid()
   })
 }
 
 # Call shiny
 shinyApp(ui = ui, server = server)
+
 ```
+
