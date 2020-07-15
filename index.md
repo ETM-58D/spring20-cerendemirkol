@@ -20,5 +20,7 @@ You can find the answers of the homework 2-3 which we prepared as a group with [
 ## Homework 4 
 You can find the answers of the homework 4 [here](files/HW4/HW_4.html) which we prepared as a group with [Okan Güven](https://etm-58d.github.io/spring20-guven80/) and [Sevgican Varol](https://etm-58d.github.io/spring20-sevgicanvrl).
 
+## Term Project
+You ca find the project report [here](files/Project/ETM 58D Final Project.pdf) and core [here](files/Project/Project_Submit.html)
 
 
